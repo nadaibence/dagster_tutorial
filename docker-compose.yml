@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+    dagster:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: dagster_container
+        ports:
+            - '9000:3000'
+        volumes:
+            - './app:/app'
+        environment:
+            DAGSTER_HOME: /app
+            DAGSTER_POSTGRES_USER: test_user
+            DAGSTER_POSTGRES_PASSWORD: test_user
+            DAGSTER_POSTGRES_DB: test_user
+        depends_on: 
+            - dagitdb
+        command: ["dagit", "-h", "0.0.0.0", "-p", "3000"]
+
+    postgre:
+        image: postgres:latest
+        restart: always
+        ports:
+            - '5432:5432'
+        environment:
+            POSTGRES_PASSWORD: test_user
+            POSTGRES_USER: test_user
+            POSTGRES_DB: test_user
+
+    dagitdb:
+        image: postgres:latest
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: test_user
+            POSTGRES_USER: test_user
+            POSTGRES_DB: test_user
