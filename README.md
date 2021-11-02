@@ -16,7 +16,7 @@ docker compose up --build
 This will pull all the important docker images from docker hub and build the infrastructure. After that you will need to go inside the docker container and start the dagster daemon, so the scheduler and the sensors can work! 
 
 ```bash
-docker exec -it docker_container bash
+docker exec -it dagster_container bash
 ```
 
 Then run the following command to start the daemons!
